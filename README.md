@@ -1,5 +1,7 @@
 # t
 
+table inspired from https://blog.logrocket.com/table-component-from-scratch-vue-3-bootstrap/
+
 nice draggable project https://codesandbox.io/s/y1sh5l?file=/src/components/SimpleFlowChart.vue
 
 ## Project setup
