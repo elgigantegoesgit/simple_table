@@ -34,13 +34,27 @@ export default {
   data() {
     return {
       sortDesc: true,
+      sortDescFields: new Array(this.fields.length).fill(0),
+      myfields: [],
     };
   },
   methods: {
     sortTable(field) {
       this.sortDesc = !this.sortDesc;
       console.log("sort " + this.sortDesc + " by " + field);
+      console.log(this.sortDescFields);
+      console.log(this.myfields[2]);
     },
+  },
+  mounted() {
+    console.log("process.env.NODE_ENV set to: '" + process.env.NODE_ENV + "'");
+    console.log(this.sortDescFields);
+
+    this.myfields.push({ label: "ID", isSorted: 0 });
+    this.myfields.push({ label: "Name", isSorted: 0 });
+    this.myfields.push({ label: "Course", isSorted: 0 });
+    this.myfields.push({ label: "Gender", isSorted: 0 });
+    this.myfields.push({ label: "Age", isSorted: 0 });
   },
 };
 </script>
