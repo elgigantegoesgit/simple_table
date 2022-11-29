@@ -1,5 +1,5 @@
 <template>
-  <Table :fields="fields" :studentData="studentData"></Table>
+  <Table :myfields="myfields" :studentData="studentData"></Table>
 </template>
 
 <script>
@@ -12,6 +12,13 @@ export default {
   },
 
   setup() {
+    var myfields = [];
+    myfields.push({ label: "ID", isSorted: 0 }); //isSorted: 0...not sorted, 1...ASC, -1...DESC
+    myfields.push({ label: "Name", isSorted: 0 });
+    myfields.push({ label: "Course", isSorted: 0 });
+    myfields.push({ label: "Gender", isSorted: 0 });
+    myfields.push({ label: "Age", isSorted: 0 });
+
     //An array of values for the data
     const studentData = [
       {
@@ -33,7 +40,7 @@ export default {
         Name: "Kristen Anderson",
         Course: "Economics",
         Gender: "Female",
-        Age: "20",
+        Age: "20.123",
       },
       {
         ID: "04",
@@ -50,8 +57,8 @@ export default {
         Age: "22",
       },
     ];
-    const fields = ["ID", "Name", "Course", "Gender", "Age"];
-    return { studentData, fields };
+
+    return { studentData, myfields };
   },
 };
 </script>

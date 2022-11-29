@@ -2,6 +2,9 @@
 
 table inspired from https://blog.logrocket.com/table-component-from-scratch-vue-3-bootstrap/
 
+nice advanced table vue+slots+tailwind with pagination and sorting
+https://github.com/BitTheCat/tailwind-vue-data-table/blob/main/src/components/TVTable.vue
+
 nice draggable project https://codesandbox.io/s/y1sh5l?file=/src/components/SimpleFlowChart.vue
 
 ## Project setup

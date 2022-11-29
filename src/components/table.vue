@@ -1,20 +1,32 @@
 <template>
+  <!-- ul>
+    <li v-for="item in myfields">{{ item.label }}</li>
+  </ul>
+  <ul>
+    <li v-for="(obj, idx) in myfields">{{ idx }} : {{ obj }}</li>
+  </ul -->
   <table>
     <thead>
       <tr>
         <!-- loop through each value of the fields to get the table header -->
-        <th v-for="field in fields" :key="field" @click="sortTable(field)">
-          {{ field }}
-          <i v-if="sortDesc">▼</i>
-          <i v-else>▲</i>
+        <th
+          v-for="(field, idx) in myfieldslcl"
+          :key="field"
+          @click="sortTable(idx)"
+        >
+          {{ field.label }}
+          <!-- i> xx {{ field.isSorted }}</i -->
+          <i v-if="field.isSorted === 0">▲</i>
+          <i v-if="field.isSorted === 1">▼</i>
+          <i v-if="field.isSorted === -1">&nbsp; &nbsp; &nbsp;</i>
         </th>
       </tr>
     </thead>
 
     <tbody>
       <!-- Loop through the list get the each student data -->
-      <tr v-for="item in studentData" :key="item">
-        <td v-for="field in fields" :key="field">{{ item[field] }}</td>
+      <tr v-for="item in studentDatalcl" :key="item">
+        <td v-for="field in myfields" :key="field">{{ item[field.label] }}</td>
       </tr>
     </tbody>
   </table>
@@ -24,37 +36,57 @@
 export default {
   name: "TableComponent",
   props: {
-    studentData: {
+    myfields: {
       type: Array,
     },
-    fields: {
+    studentData: {
       type: Array,
     },
   },
   data() {
     return {
-      sortDesc: true,
-      sortDescFields: new Array(this.fields.length).fill(0),
-      myfields: [],
+      myfieldslcl: [], // local copy of passed prop 'myfields' in order to mutate 'isSorted'
+      studentDatalcl: [],
     };
   },
   methods: {
-    sortTable(field) {
-      this.sortDesc = !this.sortDesc;
-      console.log("sort " + this.sortDesc + " by " + field);
-      console.log(this.sortDescFields);
-      console.log(this.myfields[2]);
+    sortTable(idx_) {
+      if (this.myfieldslcl[idx_].isSorted < 1)
+        this.myfieldslcl[idx_].isSorted++;
+      else this.myfieldslcl[idx_].isSorted = -1;
+
+      if (this.myfieldslcl[idx_].isSorted === 0) {
+        // restore original order
+        this.studentDatalcl = [...this.studentData];
+        return; // no sorting, change nothing
+      }
+
+      // console.log("sort " + this.myfieldslcl[idx_].isSorted + " by " + this.myfieldslcl[idx_].label );
+      // this.studentDatalcl.reverse();
+
+      //isSorted: 0...not sorted, 1...ASC, -1...DESC
+      const sort_ = this.myfieldslcl[idx_].isSorted;
+
+      let y = Number(this.studentDatalcl[2].Age) + 0.123; //.toLowerCase();
+      console.log("y: " + y);
+
+      // seems to work for strings AND numbers
+      this.studentDatalcl.sort(function (a, b) {
+        //let x = a.Age.toLowerCase();
+        //let y = b.Age.toLowerCase();
+        let x = Number(a.Age);
+        let y = Number(b.Age);
+        if (x < y) return -1 * sort_;
+        if (x > y) return 1 * sort_;
+        return 0;
+      });
     },
   },
   mounted() {
     console.log("process.env.NODE_ENV set to: '" + process.env.NODE_ENV + "'");
-    console.log(this.sortDescFields);
-
-    this.myfields.push({ label: "ID", isSorted: 0 });
-    this.myfields.push({ label: "Name", isSorted: 0 });
-    this.myfields.push({ label: "Course", isSorted: 0 });
-    this.myfields.push({ label: "Gender", isSorted: 0 });
-    this.myfields.push({ label: "Age", isSorted: 0 });
+    this.studentDatalcl = [...this.studentData];
+    this.myfieldslcl = [...this.myfields];
+    console.table(this.myfieldslcl[2].isSorted);
   },
 };
 </script>
