@@ -56,7 +56,6 @@ export default {
     sortTable(idx_) {
       this.myfieldslcl.forEach(function (myfield_, idx_loop) {
         var x = myfield_.isSorted;
-        console.log("idx: " + idx_ + "  txt: " + x);
         if (idx_loop !== idx_) myfield_.isSorted = 0;
       });
 
@@ -77,8 +76,8 @@ export default {
 
       // sort by number
       if (this.myfieldslcl[idx_].sortBy === 0) {
+        console.log("sort by " + sortFieldLabel_ + " with method nr");
         this.studentDatalcl.sort(function (a, b) {
-          console.log("sort by " + sortFieldLabel_ + " with method nr");
           let x = Number(a[sortFieldLabel_]);
           let y = Number(b[sortFieldLabel_]);
           if (x < y) return -1 * sort_;
@@ -88,8 +87,8 @@ export default {
       }
       // sort by text/string
       else {
+        console.log("sort by " + sortFieldLabel_ + " with method txt");
         this.studentDatalcl.sort(function (a, b) {
-          console.log("sort by " + sortFieldLabel_ + " with method txt");
           let x = a[sortFieldLabel_].toLowerCase();
           let y = b[sortFieldLabel_].toLowerCase();
           if (x < y) return -1 * sort_;
@@ -108,7 +107,7 @@ export default {
         Gender: "Female",
         Age: "23",*/
     for (var i = 6; i < 1000; i++) {
-      // ab 15000 wirds lahm (ca 1 sec/1000 beim sort)
+      // ab 15000 wirds zach (>1 sec)
       this.studentDatalcl.push({
         ID: i,
         Name: "wurst",
