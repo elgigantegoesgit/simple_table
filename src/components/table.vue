@@ -15,10 +15,12 @@
           @click="sortTable(idx)"
         >
           {{ field.label }}
-          <!-- i> xx {{ field.isSorted }}</i -->
-          <i v-if="field.isSorted === 0">▲</i>
-          <i v-if="field.isSorted === 1">▼</i>
-          <i v-if="field.isSorted === -1">&nbsp; &nbsp; &nbsp;</i>
+          <!-- i> xx {{ field.isSorted }}</i         ohter arrows: ▲▼↑↓↕ -->
+          <strong v-if="field.isSorted === 0" :style="{ color: 'gray' }"
+            >⬆</strong
+          >
+          <strong v-if="field.isSorted === 1">⬇</strong>
+          <strong v-if="field.isSorted === -1">⬍</strong>
         </th>
       </tr>
     </thead>
@@ -47,44 +49,75 @@ export default {
     return {
       myfieldslcl: [], // local copy of passed prop 'myfields' in order to mutate 'isSorted'
       studentDatalcl: [],
+      studentDatalcl_cpy: [],
     };
   },
   methods: {
     sortTable(idx_) {
+      this.myfieldslcl.forEach(function (myfield_, idx_loop) {
+        var x = myfield_.isSorted;
+        console.log("idx: " + idx_ + "  txt: " + x);
+        if (idx_loop !== idx_) myfield_.isSorted = 0;
+      });
+
       if (this.myfieldslcl[idx_].isSorted < 1)
         this.myfieldslcl[idx_].isSorted++;
       else this.myfieldslcl[idx_].isSorted = -1;
 
       if (this.myfieldslcl[idx_].isSorted === 0) {
         // restore original order
-        this.studentDatalcl = [...this.studentData];
+        this.studentDatalcl = this.studentDatalcl_cpy;
         return; // no sorting, change nothing
       }
 
       // console.log("sort " + this.myfieldslcl[idx_].isSorted + " by " + this.myfieldslcl[idx_].label );
-      // this.studentDatalcl.reverse();
-
       //isSorted: 0...not sorted, 1...ASC, -1...DESC
       const sort_ = this.myfieldslcl[idx_].isSorted;
+      const sortFieldLabel_ = this.myfieldslcl[idx_].label;
 
-      let y = Number(this.studentDatalcl[2].Age) + 0.123; //.toLowerCase();
-      console.log("y: " + y);
-
-      // seems to work for strings AND numbers
-      this.studentDatalcl.sort(function (a, b) {
-        //let x = a.Age.toLowerCase();
-        //let y = b.Age.toLowerCase();
-        let x = Number(a.Age);
-        let y = Number(b.Age);
-        if (x < y) return -1 * sort_;
-        if (x > y) return 1 * sort_;
-        return 0;
-      });
+      // sort by number
+      if (this.myfieldslcl[idx_].sortBy === 0) {
+        this.studentDatalcl.sort(function (a, b) {
+          console.log("sort by " + sortFieldLabel_ + " with method nr");
+          let x = Number(a[sortFieldLabel_]);
+          let y = Number(b[sortFieldLabel_]);
+          if (x < y) return -1 * sort_;
+          if (x > y) return 1 * sort_;
+          return 0;
+        });
+      }
+      // sort by text/string
+      else {
+        this.studentDatalcl.sort(function (a, b) {
+          console.log("sort by " + sortFieldLabel_ + " with method txt");
+          let x = a[sortFieldLabel_].toLowerCase();
+          let y = b[sortFieldLabel_].toLowerCase();
+          if (x < y) return -1 * sort_;
+          if (x > y) return 1 * sort_;
+          return 0;
+        });
+      }
     },
   },
   mounted() {
     console.log("process.env.NODE_ENV set to: '" + process.env.NODE_ENV + "'");
     this.studentDatalcl = [...this.studentData];
+    /*ID: "03",
+        Name: "Kristen Anderson",
+        Course: "Economics",
+        Gender: "Female",
+        Age: "23",*/
+    for (var i = 6; i < 1000; i++) {
+      // ab 15000 wirds lahm (ca 1 sec/1000 beim sort)
+      this.studentDatalcl.push({
+        ID: i,
+        Name: "wurst",
+        Course: "sudln",
+        Gender: i % 2 === 0 ? "male" : "female",
+        Age: 99 - i,
+      });
+    }
+    this.studentDatalcl_cpy = this.studentDatalcl;
     this.myfieldslcl = [...this.myfields];
     console.table(this.myfieldslcl[2].isSorted);
   },
