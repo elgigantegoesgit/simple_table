@@ -1,17 +1,32 @@
 <template>
-  <Table :myfields="myfields" :studentData="studentData"></Table>
+  <myInput @setfilterto="setfilter" />
+  <p>Filter val in App.vue: {{ myFilVal }}</p>
+  <Table
+    :myfields="myfields"
+    :studentData="studentDatax"
+    :myFilter="myFilVal"
+  ></Table>
 </template>
 
 <script>
 import Table from "./components/table.vue";
+import myInput from "./components/input.vue";
 
 export default {
   name: "App",
   components: {
     Table,
+    myInput,
+  },
+  methods: {
+    setfilter(fil_) {
+      console.log("filterxxx" + fil_);
+      this.myFilVal = 24;
+    },
   },
 
   setup() {
+    var myFilVal = "22";
     var myfields = [];
     myfields.push({ label: "ID", isSorted: 0, sortBy: 0 }); // isSorted: 0...not sorted, 1...ASC, -1...DESC
     myfields.push({ label: "Name", isSorted: 0, sortBy: 1 }); // sortBy: 0...number, 1...text
@@ -20,7 +35,7 @@ export default {
     myfields.push({ label: "Age", isSorted: 0, sortBy: 0 });
 
     //An array of values for the data
-    const studentData = [
+    const studentDatax = [
       {
         ID: "01",
         Name: "Abiola Esther x",
@@ -58,7 +73,7 @@ export default {
       },
     ];
 
-    return { studentData, myfields };
+    return { studentDatax, myfields, myFilVal };
   },
 };
 </script>

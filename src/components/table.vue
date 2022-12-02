@@ -5,6 +5,10 @@
   <ul>
     <li v-for="(obj, idx) in myfields">{{ idx }} : {{ obj }}</li>
   </ul -->
+  <p>
+    <button @click="myFilterMeth()">Filter me!</button>
+    for what contains: {{ myFilter }}
+  </p>
   <table>
     <thead>
       <tr>
@@ -38,6 +42,7 @@
 export default {
   name: "TableComponent",
   props: {
+    myFilter: String,
     myfields: {
       type: Array,
     },
@@ -53,9 +58,17 @@ export default {
     };
   },
   methods: {
+    myFilterMeth() {
+      console.log("filter by" + this.myFilter);
+      var fil_ = this.myFilter;
+      this.studentDatalcl = [
+        ...this.studentDatalcl_cpy.filter(function (el) {
+          return el.Age === fil_;
+        }),
+      ];
+    },
     sortTable(idx_) {
       this.myfieldslcl.forEach(function (myfield_, idx_loop) {
-        var x = myfield_.isSorted;
         if (idx_loop !== idx_) myfield_.isSorted = 0;
       });
 
@@ -101,11 +114,6 @@ export default {
   mounted() {
     console.log("process.env.NODE_ENV set to: '" + process.env.NODE_ENV + "'");
     this.studentDatalcl = [...this.studentData];
-    /*ID: "03",
-        Name: "Kristen Anderson",
-        Course: "Economics",
-        Gender: "Female",
-        Age: "23",*/
     for (var i = 6; i < 1000; i++) {
       // ab 15000 wirds zach (>1 sec)
       this.studentDatalcl.push({
@@ -116,7 +124,7 @@ export default {
         Age: 99 - i,
       });
     }
-    this.studentDatalcl_cpy = this.studentDatalcl;
+    this.studentDatalcl_cpy = this.studentDatalcl; // only copys reference(memAdress) of array, not the values - but it works?
     this.myfieldslcl = [...this.myfields];
     console.table(this.myfieldslcl[2].isSorted);
   },

@@ -1,4 +1,6 @@
-# simple table template, tests with environment variables (process.env.NODE_ENV)
+# simple table template, tests with environment variables, input field with watcher
+
+(process.env.NODE_ENV)
 
 table inspired from https://blog.logrocket.com/table-component-from-scratch-vue-3-bootstrap/
 
