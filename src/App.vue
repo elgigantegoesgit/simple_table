@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import Table from "./components/table.vue";
 import myInput from "./components/input.vue";
 
@@ -21,12 +22,13 @@ export default {
   methods: {
     setfilter(fil_) {
       console.log("filterxxx" + fil_);
-      this.myFilVal = 24;
+      this.myFilVal = Number(fil_);
     },
   },
 
   setup() {
-    var myFilVal = "22";
+    var myFilVal = ref(0);
+    myFilVal.value = 20;
     var myfields = [];
     myfields.push({ label: "ID", isSorted: 0, sortBy: 0 }); // isSorted: 0...not sorted, 1...ASC, -1...DESC
     myfields.push({ label: "Name", isSorted: 0, sortBy: 1 }); // sortBy: 0...number, 1...text
