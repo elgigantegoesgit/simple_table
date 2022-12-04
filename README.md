@@ -1,4 +1,4 @@
-# simple table template, tests with environment variables, input field with watcher
+# simple table template, tests with environment variables, input field with watcher, simple filter/ LAST VERSION with Composition API
 
 (process.env.NODE_ENV)
 
