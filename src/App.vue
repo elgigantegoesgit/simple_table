@@ -20,6 +20,7 @@
 <script>
 import Table from "./components/table.vue";
 import myInput from "./components/input.vue";
+import mydata from "./assets/data.json";
 
 export default {
   name: "App",
@@ -40,57 +41,18 @@ export default {
       //console.log(this.$refs.myModal.style);
     },
   },
+  mounted() {
+    console.log(Date.now() + "Mounted. Starting...");
+  },
 
   data() {
     return {
       myFilVal: "23",
       //  isSorted: 0...not sorted, 1...ASC, -1...DESC
       // sortBy: 0...number, 1...text
-      myfields: [
-        { label: "ID", isSorted: 0, sortBy: 0 },
-        { label: "Name", isSorted: 0, sortBy: 1 },
-        { label: "Course", isSorted: 0, sortBy: 1 },
-        { label: "Gender", isSorted: 0, sortBy: 1 },
-        { label: "Age", isSorted: 0, sortBy: 0 },
-      ],
+      myfields: mydata.myfields,
 
-      studentDatax: [
-        {
-          ID: "01",
-          Name: "Abiola Esther x",
-          Course: "Computer Science",
-          Gender: "Female",
-          Age: "27",
-        },
-        {
-          ID: "02",
-          Name: "Robert V. Kratz",
-          Course: "Philosophy",
-          Gender: "Male",
-          Age: "21",
-        },
-        {
-          ID: "03",
-          Name: "Kristen Anderson",
-          Course: "Economics",
-          Gender: "Female",
-          Age: "23",
-        },
-        {
-          ID: "04",
-          Name: "Adam Simon",
-          Course: "Food science",
-          Gender: "Male",
-          Age: "22",
-        },
-        {
-          ID: "05",
-          Name: "Daisy Katherine",
-          Course: "Business studies",
-          Gender: "Female",
-          Age: "19",
-        },
-      ],
+      studentDatax: mydata.studs,
     };
   },
 };

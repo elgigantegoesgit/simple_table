@@ -1,4 +1,4 @@
-# simple table template, tests with environment variables, input field with watcher, simple filter, simple modal popup window / Pure Options API version
+# simple table template, tests with environment variables, json file as array-of-objects-import, input field with watcher, simple filter, simple modal popup window
 
 (process.env.NODE_ENV)
 
