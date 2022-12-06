@@ -132,6 +132,10 @@ export default {
 </script>
 
 <style scoped>
+table {
+  margin-left: auto;
+  margin-right: auto;
+}
 table,
 th,
 td {

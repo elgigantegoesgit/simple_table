@@ -1,6 +1,6 @@
 <template>
   <p>Message is: '{{ myVal }}'</p>
-  <input v-model="myVal" placeholder="edit me" />
+  <input v-model.lazy="myVal" placeholder="edit me" />
 </template>
 
 <script>

@@ -1,4 +1,5 @@
 <template>
+  <img src="./assets/logo.png" style="width: 50px" />
   <button @click="mypopup">Open Popup...</button>
   <!-- embed  type="text/plain" src="./assets/text.txt" /      geht nicht -->
   <p>Filter val in App.vue: {{ myFilVal }}</p>
@@ -32,6 +33,7 @@ export default {
     setfilter(fil_) {
       console.log("filterxxx" + fil_);
       this.myFilVal = Number(fil_);
+      this.mypopup();
     },
     mypopup() {
       //this.$refs.myModal.style="display:block";
